@@ -19,7 +19,7 @@ namespace Helloword_core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env )
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -27,6 +27,11 @@ namespace Helloword_core
             }
 
             app.Map("/test", testPipeline);
+            app.Use(next => async context =>
+           {
+               await context.Response.WriteAsync("Before Hello: ");
+               await next.Invoke(context);
+           });
 
             app.Run(async (context) =>
             {
@@ -47,8 +52,7 @@ namespace Helloword_core
 
 
         private void testPipeline1(IApplicationBuilder app)
-        { 
-
+        {
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("hello from teste  testPipeline1 kay ln;");
@@ -56,8 +60,7 @@ namespace Helloword_core
         }
 
         private void testPipeline2(IApplicationBuilder app)
-        { 
-
+        {
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("hello from teste  testPipeline2 kay in;");
