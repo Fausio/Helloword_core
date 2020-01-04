@@ -36,9 +36,31 @@ namespace Helloword_core
 
         private void testPipeline(IApplicationBuilder app)
         {
+            app.MapWhen(context => { return context.Request.Query.ContainsKey("ln"); }, testPipeline1);
+            app.MapWhen(a => { return a.Request.Query.ContainsKey("in"); }, testPipeline2);
+
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("hello from teste  app.Map();");
+            });
+        }
+
+
+        private void testPipeline1(IApplicationBuilder app)
+        { 
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("hello from teste  testPipeline1 kay ln;");
+            });
+        }
+
+        private void testPipeline2(IApplicationBuilder app)
+        { 
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("hello from teste  testPipeline2 kay in;");
             });
         }
     }
