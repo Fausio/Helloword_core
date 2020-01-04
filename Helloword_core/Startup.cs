@@ -27,14 +27,16 @@ namespace Helloword_core
             }
 
             app.Map("/test", testPipeline);
-            app.Use(next => async context =>
-           {
-               await context.Response.WriteAsync("Before Hello: ");
-               await next.Invoke(context);
-           });
+           // app.Use(next => async context =>
+           //{
+           //    await context.Response.WriteAsync("Before Hello: ");
+           //    await next.Invoke(context);
+           //});
 
             app.Run(async (context) =>
             {
+
+                throw new Exception("Hello exception");
                 await context.Response.WriteAsync("hello word");
             });
         }
