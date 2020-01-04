@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Helloword_core
 {
@@ -19,7 +20,7 @@ namespace Helloword_core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -36,6 +37,7 @@ namespace Helloword_core
 
             app.Run(async (context) =>
             {
+                logger.LogInformation("Response Served."); 
                 await context.Response.WriteAsync("hello word");
             });
         }
