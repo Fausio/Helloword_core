@@ -26,11 +26,19 @@ namespace Helloword_core
                 app.UseDeveloperExceptionPage();
             }
 
-
+            app.Map("/test", testPipeline);
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("hello work");
+                await context.Response.WriteAsync("hello word");
+            });
+        }
+
+        private void testPipeline(IApplicationBuilder app)
+        {
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("hello from teste  app.Map();");
             });
         }
     }
