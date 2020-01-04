@@ -8,18 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Helloword_core.Controllers
 {
- 
-    public class HomeController : Controller
-    { 
+
+    public class UserController : Controller
+    {
         // GET: /<controller>/
         public string Index()
         {
-            return "Hello from HomeController";
-        }
-          
-        public string About()
-        {
-            return "About";
+            return "from User Index";
         }
     }
 }

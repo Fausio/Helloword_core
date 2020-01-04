@@ -8,18 +8,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Helloword_core.Controllers
 {
- 
-    public class HomeController : Controller
-    { 
+
+    [Route("[Controller]/[Action]")]
+    public class ProductController : Controller
+    {
         // GET: /<controller>/
-        public string Index()
+        public List<string> Index()
         {
-            return "Hello from HomeController";
-        }
-          
-        public string About()
-        {
-            return "About";
+            return new List<string>()
+            {
+                      "Item 1",
+                      "Item 2"
+            };
         }
     }
 }

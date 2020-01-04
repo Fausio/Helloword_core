@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -29,7 +30,8 @@ namespace Helloword_core
             }
 
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(configureRoutes);
+
             app.Map("/test", testPipeline);
             app.Use(next => async context =>
            {
@@ -39,11 +41,11 @@ namespace Helloword_core
 
             app.Run(async (context) =>
             {
-                logger.LogInformation("Response Served."); 
+                logger.LogInformation("Response Served.");
                 await context.Response.WriteAsync(hello.SayHello());
             });
         }
-
+        #region testPipelines
         private void testPipeline(IApplicationBuilder app)
         {
             app.MapWhen(context => { return context.Request.Query.ContainsKey("ln"); }, testPipeline1);
@@ -71,5 +73,15 @@ namespace Helloword_core
                 await context.Response.WriteAsync("hello from teste  testPipeline2 kay in;");
             });
         }
+        #endregion
+
+
+        private static void configureRoutes(IRouteBuilder routes)
+        {
+            routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            routes.MapRoute("admin", "admin/{controller=User}/{action=Index}/{id?}");
+            routes.MapRoute("shop", "{controller=Product}/{action=Index}/{id?}");
+
+        } 
     }
 }
